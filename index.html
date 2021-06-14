@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.8/vue.min.js"></script>
+</head>
+<body>
+    <div id='app'>
+        <filter-list></filter-list>
+    </div>
+
+    <template id='filter-list-temp'>
+        <div>
+            <h4>filter list</h4>
+            <condition :filter-text.sync="filterText"></condition>
+            <list :items="filteredItems"></list>
+        </div>
+    </template>
+
+    <template id='condition-temp'>
+        <div>
+            <input v-model="filterText"/>
+        </div>
+    </template>
+
+    <template id='list-temp'>
+        <div>
+            <p v-for="item in items">
+                {{item}}
+            </p>
+        </div>
+    </template>
+</body>
+<script>
+    Vue.component('condition', {
+        template: '#condition-temp',
+        props: ['filterText']
+    });
+
+    Vue.component('list', {
+        template: '#list-temp',
+        props: ['items']
+    })
+
+    Vue.component('filter-list', {
+        template: '#filter-list-temp',
+        data: function() {
+            return {
+                filterText: '',
+                items: ['Iphone 12','Galaxy S21','Redmi Note 10']
+            }
+        },
+        computed: {
+            filteredItems: function() {
+                return this.$data.items.filter(function(item) {
+                    return item.indexOf(this.$data.filterText) != -1;
+                }.bind(this));
+            }
+        }
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+</html>
