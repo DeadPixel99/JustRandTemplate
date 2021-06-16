@@ -2,66 +2,334 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.8/vue.min.js"></script>
-</head>
+    <title>Landing</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.7/jquery.fullpage.css">
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script src="particles.min.js"></script>
 <body>
-    <div id='app'>
-        <filter-list></filter-list>
+    <div class="site">
+        <section class="header section" id="particles-js">
+            <div class="txt">
+                <h1>Умка Астроном</h1>
+                <h5>
+                    Інтернет-комікс для дітей
+                    <br>
+                    від 6 до 106 років
+                </h5>
+                <img src="space.svg" />
+            </div>
+        </section>
+        <section class="header section s2">
+            <img data-info="Чи світить Місяць?" src="planet1.png" class="planet" style="top: 14%; left: 13%; animation: rotate 12s infinite linear; animation-delay: 2s">
+            <img data-info="Що таке чорні дири?" src="planets2.png" class="planet" style="top: 62%; left: 20%; animation: pulse 5s infinite linear; animation-delay: 1s">
+            <img data-info="Як працює гравітація?" src="planets3.png" class="planet" style="top: 45%; left: 40%; animation: rotate 8s infinite linear">
+            <img data-info="Наскільки далеке Сонце?" src="planets4.png" class="planet" style="top: 15%; left: 60%; animation: pulse 6s infinite linear; animation-delay: 3s">
+            <img data-info="Чи безкінечний Всесвіт?" src="planets5.png" class="planet" style="bottom: 20%; right: 23%; animation: shake 7s infinite linear">
+            <img data-info="Чому на Марсі неможливе життя?" src="planets6.png" class="planet" style="bottom: 50%; right: 14%; animation: pulse 5s infinite linear">
+            <img src="space.svg" class="cat" />
+
+            <blockquote class="speech-bubble" id="planetContent">
+                <p>Test data</p>
+            </blockquote>
+        </section>
     </div>
-
-    <template id='filter-list-temp'>
-        <div>
-            <h4>filter list</h4>
-            <condition :filter-text.sync="filterText"></condition>
-            <list :items="filteredItems"></list>
-        </div>
-    </template>
-
-    <template id='condition-temp'>
-        <div>
-            <input v-model="filterText"/>
-        </div>
-    </template>
-
-    <template id='list-temp'>
-        <div>
-            <p v-for="item in items">
-                {{item}}
-            </p>
-        </div>
-    </template>
 </body>
+<style>
+    @keyframes fly {
+        0% { transform: rotate(-15deg) }
+        50% { transform: rotate(15deg) }
+        100% { transform: rotate(-15deg) }
+    }
+
+    @keyframes shake {
+        0% { transform: translateY(0) }
+        50% { transform: translateY(16px) }
+        100% { transform: translateY(0) }
+    }
+
+    @keyframes rotate {
+        0% { transform: rotate(0) }
+        50% { transform: rotate(180deg) }
+        100% { transform: rotate(360deg) }
+    }
+
+    @keyframes pulse {
+        0% { transform: scale(1) }
+        50% { transform: scale(1.25) }
+        100% { transform: scale(1) }
+    }
+
+    @keyframes fly-1 {
+        from { transform: rotate(-15deg) }
+        to { transform: rotate(15deg) }
+    }
+
+    @font-face {
+        font-family: MB;
+        src: url(MontserratAlternates-Bold.ttf);
+    }
+
+    @font-face {
+        font-family: MR;
+        src: url(MontserratAlternates-Regular.ttf);
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    section.header {
+        height: 100vh;
+        width: 100vw;
+        background: url("space.png") no-repeat;
+        background-size: cover;
+        position: relative;
+        font-family: "Comic Sans MS";
+        overflow: hidden;
+    }
+
+    section.header .txt {
+        color: white;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 17%;
+        user-select: none;
+    }
+
+    section.header .txt h1 {
+        font-size: 8rem;
+        font-family: MB;
+        text-shadow: white 1px 0 10px;
+    }
+
+    section.header .txt h5 {
+        font-size: 2rem;
+        font-family: MR;
+    }
+
+    section.header .txt img {
+        width: 20%;
+        height: auto;
+        position: absolute;
+        right: 15%;
+        bottom: -30%;
+        animation: fly infinite 10s;
+    }
+
+    section.header img.cat {
+        width: 20%;
+        height: auto;
+        position: absolute;
+        right: 15%;
+        bottom: 22%;
+        animation: fly infinite 10s;
+    }
+
+    section.header img.planet {
+        position: absolute;
+        width: 160px;
+        height: auto;
+        transition: all 500ms linear;
+    }
+
+    .speech-bubble {
+        filter: drop-shadow(-1px -1px 2px rgba(0, 0, 0, .10)) drop-shadow(1px 2px 2px rgba(0, 0, 0, .15));
+        margin: 1rem;
+        margin-bottom: 40px;
+        padding: 1.5rem 2rem;
+        position: absolute;
+        font-family: 'Source Sans Pro', sans-serif;
+        font-size: 1.2rem;
+        font-weight: 400;
+        background: rgba(0,0,0,.7);
+        color: white;
+        backdrop-filter: blur(2px);
+    }
+    /*.speech-bubble::before {
+        border: 12.5px solid transparent;
+        border-top: 12.5px solid rgba(0,0,0,.7);
+        border-bottom: 0;
+        height: 0;
+        width: 0;
+        border-top-width: 25px;
+        content: '';
+        display: block;
+        position: absolute;
+        left: 3rem;
+        bottom: -25px;
+        transform-origin: center;
+        transform: rotate(90deg) skew(-25deg) translateY(16.6666666667px);
+        backdrop-filter: blur(2px);
+    }*/
+
+
+</style>
 <script>
-    Vue.component('condition', {
-        template: '#condition-temp',
-        props: ['filterText']
-    });
+    (function () {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 106,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ffffff"
+                },
+                "shape": {
+                    "type": "star",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.6730122103643886,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 8,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 400,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
 
-    Vue.component('list', {
-        template: '#list-temp',
-        props: ['items']
-    })
+        const planet = $('img.planet');
+        const cat = $('img.cat');
+        const planetContent = $('#planetContent');
 
-    Vue.component('filter-list', {
-        template: '#filter-list-temp',
-        data: function() {
-            return {
-                filterText: '',
-                items: ['Iphone 12','Galaxy S21','Redmi Note 10']
+        planetContent.hide();
+
+        planet.click(e => {
+            const t = $(e.target);
+
+            planetContent.stop().hide(1000, () => {
+                cat.stop().animate({
+                    left: t.position().left + 80 + 'px',
+                    top: t.position().top + 80 + 'px'
+                }, {
+                    duration: 1500,
+                    complete: () => {
+                        planetContent.text(t.attr('data-info'))
+                        planetContent.css({
+                            left: t.position().left + 60 + 'px',
+                            top: t.position().top + 'px'
+                        })
+                        planetContent.stop().show(1000)
+                    }
+                })
+            })
+        })
+
+        let counter = 0;
+
+        setInterval(() => {
+            let planets = $('img.planet');
+            let random = Math.floor(Math.random()*planets.length);
+            planets.eq(counter++).click();
+
+            if (counter >= planets.length) {
+                counter = 0
             }
-        },
-        computed: {
-            filteredItems: function() {
-                return this.$data.items.filter(function(item) {
-                    return item.indexOf(this.$data.filterText) != -1;
-                }.bind(this));
-            }
-        }
-    })
+        }, 10000)
 
-    new Vue({
-        el: '#app'
-    })
+        document.addEventListener("wheel", function (e) {
+            if (e.deltaY < 0) {
+                $('section.s2').stop().animate({top: 0}, 700)
+            } else {
+                $('section.s2').stop().animate({top: '-100vh'}, 700)
+            }
+        }, true);
+
+    })();
 </script>
 </html>
