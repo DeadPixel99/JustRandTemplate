@@ -10,6 +10,11 @@
             crossorigin="anonymous"></script>
     <script src="particles.min.js"></script>
 <body>
+    <div class="loader">
+        <div class="wrap">
+            <img src="logo.svg" />
+        </div>
+    </div>
     <div class="site">
         <section class="header section" id="particles-js">
             <div class="txt">
@@ -62,6 +67,23 @@
         100% { transform: scale(1) }
     }
 
+    @keyframes pulse-white {
+        0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+        }
+
+        70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+        }
+
+        100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+        }
+    }
+
     @keyframes fly-1 {
         from { transform: rotate(-15deg) }
         to { transform: rotate(15deg) }
@@ -81,6 +103,31 @@
         padding: 0;
         margin: 0;
         overflow: hidden;
+    }
+
+    div.loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: black;
+        z-index: 999;
+    }
+
+    div.loader .wrap {
+        width: 5%;
+        animation: pulse-white 1s infinite;
+        background: white;
+        border-radius: 50%;
+        padding: 8px;
+    }
+
+    div.loader .wrap img {
+
     }
 
     section.header {
@@ -172,6 +219,7 @@
 </style>
 <script>
     (function () {
+
         particlesJS('particles-js', {
             "particles": {
                 "number": {
@@ -310,6 +358,37 @@
             })
         })
 
+        function hideLoader() {
+            const loader = $('div.loader');
+            const logo = $('div.loader .wrap');
+            const img = $('div.loader .wrap img');
+
+            img.animate({opacity: 0}, {
+                duration: 500,
+                complete: () => {
+                    logo.css('animation', 'none')
+                    logo.animate({width: '100%', height: '100%', 'border-radius': 0}, {
+                        duration: 500,
+                        complete: () => {
+                            loader.animate({opacity: 0}, {
+                                duration: 500,
+                                complete: () => {
+                                    loader.remove();
+                                    document.addEventListener("wheel", function (e) {
+                                        if (e.deltaY < 0) {
+                                            $('section.s2').stop().animate({top: 0}, 700)
+                                        } else {
+                                            $('section.s2').stop().animate({top: '-100vh'}, 700)
+                                        }
+                                    }, true);
+                                }
+                            })
+                        }
+                    })
+                }
+            })
+        }
+
         let counter = 0;
 
         setInterval(() => {
@@ -322,13 +401,9 @@
             }
         }, 10000)
 
-        document.addEventListener("wheel", function (e) {
-            if (e.deltaY < 0) {
-                $('section.s2').stop().animate({top: 0}, 700)
-            } else {
-                $('section.s2').stop().animate({top: '-100vh'}, 700)
-            }
-        }, true);
+        $(window).on('load', () => {
+            setTimeout(hideLoader, 3000)
+        });
 
     })();
 </script>
